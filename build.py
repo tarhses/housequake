@@ -12,7 +12,8 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 OUTPUT_NAME = 'housequake.love'
 IGNORED_GLOBS = [
-    '.**',
+    '.*',
+    '.*/**',
     '*.love',
     'README.md',
     'LICENSE',
@@ -20,7 +21,7 @@ IGNORED_GLOBS = [
     'screenshots/**',
 ]
 
-ignored_files = set.union(*(set(glob(i.removeprefix('./'))) for i in IGNORED_GLOBS))
+ignored_files = set.union(*(set(glob(i.removeprefix('./'), recursive=True)) for i in IGNORED_GLOBS))
 ignored_files.add(os.path.basename(__file__))
 
 with ZipFile(OUTPUT_NAME, 'w', compression=ZIP_DEFLATED) as file:
